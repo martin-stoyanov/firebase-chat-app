@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FormEvent, useState } from 'react';
 import './App.css';
 
 import firebase from 'firebase/app';
@@ -68,18 +68,51 @@ const ChatRoom = () => {
   // making query and listening to all updates with this hook
   const [messages] = useCollectionData(query, { idField: 'id' });
 
+  const [formValue, setFormValue] = useState<string>('');
+
+  const sendMessage = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const { uid, photoURL } = auth.currentUser || {};
+
+    await messagesRef.add({
+      text: formValue,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      uid,
+      photoURL,
+    });
+    setFormValue('');
+  };
   return (
-    <div>
+    <>
       {messages &&
         messages.map((msg: any) => <ChatMessage key={msg.id} message={msg} />)}
-    </div>
+      <form onSubmit={sendMessage}>
+        <input
+          value={formValue}
+          onChange={(e) => setFormValue(e.target.value)}
+        />
+        <button type="submit">👉</button>
+      </form>
+    </>
   );
 };
 
 const ChatMessage = (props: any) => {
-  const { text, uid } = props.message;
+  const { text, uid, photoURL } = props.message;
 
-  return <p>{text}</p>;
+  // need to know whether each message has been sent by the user to style
+  // it appropriately
+  const messageType = uid === auth?.currentUser?.uid ? 'sent' : 'received';
+
+  return (
+    <div className={`message ${messageType}`}>
+      <img
+        src={photoURL || 'https://api.adorable.io/avatars/130/funny-guy.png'}
+        alt="profile photo"
+      />
+      <p>{text}</p>
+    </div>
+  );
 };
 
 export default App;
