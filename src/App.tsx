@@ -91,7 +91,11 @@ const ChatRoom = () => {
           value={formValue}
           onChange={(e) => setFormValue(e.target.value)}
         />
-        <button type="submit">👉</button>
+        <button type="submit">
+          <span role="img" aria-label="Submit">
+            👉
+          </span>
+        </button>
       </form>
     </>
   );
@@ -108,7 +112,7 @@ const ChatMessage = (props: any) => {
     <div className={`message ${messageType}`}>
       <img
         src={photoURL || 'https://api.adorable.io/avatars/130/funny-guy.png'}
-        alt="profile photo"
+        alt=""
       />
       <p>{text}</p>
     </div>
