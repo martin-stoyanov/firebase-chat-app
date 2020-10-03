@@ -111,15 +111,15 @@ li {
   list-style: none;
 }
 
-p {
+.message-text {
   max-width: 500px;
-  margin-bottom: 12px;
   line-height: 24px;
   padding: 10px 20px;
   border-radius: 25px;
   position: relative;
   color: white;
   text-align: center;
+  margin: 15px 0 2px 0;
 }
 
 .message {
@@ -131,14 +131,30 @@ p {
   flex-direction: row-reverse;
 }
 
-.sent p {
+.sent .message-text {
   color: white;
   background: #0b93f6;
   align-self: flex-end;
 }
-.received p {
+.received .message-text {
   background: #e5e5ea;
   color: black;
+}
+
+.time-sent {
+  margin: 0;
+  color: white;
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.received .time-sent {
+  text-align: start;
+  margin-left: 15px;
+}
+.sent .time-sent {
+  text-align: end;
+  margin-right: 15px;
 }
 
 img {

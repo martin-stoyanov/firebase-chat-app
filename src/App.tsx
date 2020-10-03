@@ -1,6 +1,8 @@
 import React, { FormEvent, useState } from 'react';
 import './App.css';
 
+import dayjs from 'dayjs';
+
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
@@ -102,11 +104,15 @@ const ChatRoom = () => {
 };
 
 const ChatMessage = (props: any) => {
-  const { text, uid, photoURL } = props.message;
+  const { text, uid, photoURL, createdAt } = props.message;
+
+  //console.log(createdAt.toDate().toTimeString());
 
   // need to know whether each message has been sent by the user to style
   // it appropriately
   const messageType = uid === auth?.currentUser?.uid ? 'sent' : 'received';
+
+  const chatTime = dayjs(createdAt.toDate()).format('hh:mm A');
 
   return (
     <div className={`message ${messageType}`}>
@@ -114,7 +120,10 @@ const ChatMessage = (props: any) => {
         src={photoURL || 'https://api.adorable.io/avatars/130/funny-guy.png'}
         alt=""
       />
-      <p>{text}</p>
+      <div style={{ display: 'flex', flexDirection: 'column' }}>
+        <p className="message-text">{text}</p>
+        <p className="time-sent">{chatTime}</p>
+      </div>
     </div>
   );
 };
