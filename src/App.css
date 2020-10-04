@@ -10,6 +10,7 @@ body {
 
 .App header {
   background-color: #181717;
+  font-size: 0.8rem;
   height: 10vh;
   min-height: 50px;
   color: white;
@@ -26,6 +27,7 @@ body {
 }
 
 .App section {
+  margin-top: 10vh;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -82,15 +84,15 @@ input {
 }
 
 button {
-  background-color: #282c34; /* Green */
+  background-color: #282c34;
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 10px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   cursor: pointer;
-  font-size: 1.25rem;
+  font-size: 1rem;
 }
 
 button:disabled {

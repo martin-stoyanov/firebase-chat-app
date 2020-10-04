@@ -33,8 +33,9 @@ function App() {
         <h1>~Marty chat~</h1>
         <SignOut />
       </header>
-
-      <section>{user ? <ChatRoom /> : <SignIn />}</section>
+      <section style={{ paddingBottom: '12vh' }}>
+        {user ? <ChatRoom /> : <SignIn />}
+      </section>
     </div>
   );
 }
@@ -112,7 +113,7 @@ const ChatMessage = (props: any) => {
   // it appropriately
   const messageType = uid === auth?.currentUser?.uid ? 'sent' : 'received';
 
-  const chatTime = dayjs(createdAt.toDate()).format('hh:mm A');
+  const chatTime = dayjs(createdAt?.toDate()).format('hh:mm A');
 
   return (
     <div className={`message ${messageType}`}>
