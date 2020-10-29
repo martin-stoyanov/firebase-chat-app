@@ -123,7 +123,25 @@ const ChatMessage = (props: any) => {
       />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <p className="message-text">{text}</p>
-        <p className="time-sent">{chatTime}</p>
+
+        {messageType === 'sent' && (
+          <div
+            style={{
+              display: 'flex',
+              flexDirection: 'row',
+              justifyContent: 'flex-end',
+            }}
+          >
+            <p className="time-sent">{chatTime}</p>
+            <span
+              role="img"
+              aria-label="delete message"
+              style={{ color: 'white', position: 'relative', top: '-3px' }}
+            >
+              ✖️
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
