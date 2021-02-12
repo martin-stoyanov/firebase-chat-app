@@ -60,11 +60,9 @@ const SignOut = () => {
     auth.currentUser && <button onClick={() => auth.signOut()}>Sign Out</button>
   );
 };
-
+// referencing the firestore "collection" aka the specific area in the database
+const messagesRef = firestore.collection('messages');
 const ChatRoom = () => {
-  // referencing the firestore "collection" aka the specific area in the database
-  const messagesRef = firestore.collection('messages');
-
   // querying the saved messages to display them to the user
   const query = messagesRef.orderBy('createdAt').limit(25);
 
@@ -85,6 +83,7 @@ const ChatRoom = () => {
     });
     setFormValue('');
   };
+
   return (
     <>
       {messages &&
@@ -105,9 +104,7 @@ const ChatRoom = () => {
 };
 
 const ChatMessage = (props: any) => {
-  const { text, uid, photoURL, createdAt } = props.message;
-
-  //console.log(createdAt.toDate().toTimeString());
+  const { text, uid, photoURL, createdAt, id: idx } = props.message;
 
   // need to know whether each message has been sent by the user to style
   // it appropriately
@@ -115,10 +112,17 @@ const ChatMessage = (props: any) => {
 
   const chatTime = dayjs(createdAt?.toDate()).format('hh:mm A');
 
+  const deleteMessage = async (id: any) => {
+    messagesRef.doc(id).delete();
+  };
+
   return (
     <div className={`message ${messageType}`}>
       <img
-        src={photoURL || 'https://api.adorable.io/avatars/130/funny-guy.png'}
+        src={
+          photoURL ||
+          'https://i.pinimg.com/736x/47/01/e8/4701e82b1cdfe9fd5f5c58f889748d22.jpg'
+        }
         alt=""
       />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -136,7 +140,18 @@ const ChatMessage = (props: any) => {
             <span
               role="img"
               aria-label="delete message"
-              style={{ color: 'white', position: 'relative', top: '-3px' }}
+              style={{
+                color: 'white',
+                position: 'relative',
+                top: '-6px',
+                cursor: 'pointer',
+              }}
+              onClick={() => {
+                // eslint-disable-next-line no-restricted-globals
+                confirm(
+                  'Are you sure you want to delete this message forever?',
+                ) && deleteMessage(idx);
+              }}
             >
               ✖️
             </span>
