@@ -118,13 +118,7 @@ const ChatMessage = (props: any) => {
 
   return (
     <div className={`message ${messageType}`}>
-      <img
-        src={
-          photoURL ||
-          'https://i.pinimg.com/736x/47/01/e8/4701e82b1cdfe9fd5f5c58f889748d22.jpg'
-        }
-        alt=""
-      />
+      <img src={photoURL || 'https://randomfox.ca/images/7.jpg'} alt="" />
       <div style={{ display: 'flex', flexDirection: 'column' }}>
         <p className="message-text">{text}</p>
 
